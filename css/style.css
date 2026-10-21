@@ -1,0 +1,416 @@
+/* ===== Цвета и размеры ===== */
+:root {
+  --bg: #fbf5ec;
+  --card: #fffdf9;
+  --text: #3b2f2a;
+  --muted: #8a7a70;
+  --line: #efe3d6;
+  --peach: #f0876a;
+  --peach-dark: #d96b4e;
+  --peach-soft: #fde6dc;
+  --mint: #4fae96;
+  --mint-soft: #dcf2ea;
+  --danger: #c94a3a;
+  --danger-soft: #fbe3df;
+  --radius: 20px;
+  --shadow: 0 6px 20px rgba(120, 80, 50, 0.08);
+  --gap: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Nunito", system-ui, sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 10% 0%, #fde9da 0, transparent 40%),
+    radial-gradient(circle at 100% 30%, #e3f4ec 0, transparent 35%),
+    var(--bg);
+}
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+:focus-visible {
+  outline: 3px solid var(--mint);
+  outline-offset: 2px;
+}
+
+/* ===== Шапка ===== */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px 8px;
+}
+
+.header__brand { display: flex; align-items: center; gap: 12px; }
+
+.header__logo {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  font-size: 28px;
+  border-radius: 16px;
+  background: var(--peach-soft);
+}
+
+.header__title { margin: 0; font-size: 1.6rem; font-weight: 800; }
+.header__subtitle { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 2px solid var(--peach);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--peach-dark);
+  font-weight: 700;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toolbar__btn:hover { background: var(--peach); color: #fff; }
+
+/* Виджет уже на панели */
+.toolbar__btn.is-active {
+  border-color: var(--mint);
+  background: var(--mint-soft);
+  color: #2d7c69;
+}
+.toolbar__btn.is-active::after { content: "✓"; }
+
+/* ===== Сетка карточек ===== */
+.main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--gap);
+  align-items: start;
+}
+
+/* ===== Карточка ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: appear 0.25s ease-out;
+}
+
+.card.is-highlighted { animation: pulse 0.6s ease-in-out 2; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pulse {
+  50% { box-shadow: 0 0 0 4px var(--peach); }
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card.is-collapsed .card__header { border-bottom-color: transparent; }
+
+.card__icon { font-size: 1.3rem; }
+
+.card__title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.card__actions { display: flex; gap: 6px; }
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 800;
+  transition: background 0.15s, color 0.15s;
+}
+
+.icon-btn:hover { background: var(--peach-soft); color: var(--peach-dark); }
+.icon-btn--danger:hover { background: var(--danger-soft); color: var(--danger); }
+
+.card__body { padding: 18px; }
+.card.is-collapsed .card__body { display: none; }
+
+/* ===== Общие кнопки ===== */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--peach);
+  color: #fff;
+  font-weight: 700;
+  transition: background 0.15s;
+}
+.btn:hover { background: var(--peach-dark); }
+.btn:disabled { opacity: 0.6; cursor: default; }
+
+.btn--ghost {
+  background: var(--mint-soft);
+  color: #2d7c69;
+}
+.btn--ghost:hover { background: #c6eadc; }
+
+/* ===== Задачи ===== */
+.todo__form { display: flex; gap: 8px; }
+
+.todo__input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text);
+}
+.todo__input:focus { border-color: var(--peach); outline: none; }
+.todo__input.is-invalid { border-color: var(--danger); }
+
+.todo__hint {
+  min-height: 1.2em;
+  margin: 6px 0 0;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+.todo__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.todo__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px dashed var(--line);
+}
+.todo__item:last-child { border-bottom: none; }
+
+.todo__check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: var(--mint);
+  cursor: pointer;
+}
+
+.todo__text { flex: 1; overflow-wrap: anywhere; cursor: pointer; }
+
+.todo__item.is-done .todo__text {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.todo__empty, .todo__counter {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ===== Сетевые виджеты: состояния ===== */
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0;
+  text-align: center;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid var(--peach-soft);
+  border-top-color: var(--peach);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.state__text { margin: 0; color: var(--muted); }
+
+.state--error .state__icon { font-size: 2rem; margin: 0; }
+
+.state--error .state__text {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* ===== Погода ===== */
+.weather__top { display: flex; align-items: center; gap: 14px; }
+
+.weather__emoji { font-size: 3rem; line-height: 1; }
+
+.weather__temp {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.weather__desc { margin: 4px 0 0; color: var(--muted); }
+
+.weather__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.stat {
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg);
+  text-align: center;
+}
+.stat__label { display: block; color: var(--muted); font-size: 0.8rem; }
+.stat__value { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.advice {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--mint);
+  border-radius: 12px;
+  background: var(--mint-soft);
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ===== Ищет дом ===== */
+.dog__photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  background: var(--peach-soft);
+}
+
+.dog__name { margin: 14px 0 2px; font-size: 1.3rem; font-weight: 800; }
+.dog__breed { margin: 0 0 14px; color: var(--muted); }
+
+/* ===== Пустая панель ===== */
+.empty {
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+.empty__icon { margin: 0; font-size: 3rem; }
+.empty__title { margin: 8px 0 4px; color: var(--text); font-size: 1.2rem; font-weight: 800; }
+.empty__text { margin: 0; }
+
+/* ===== Подвал ===== */
+.footer {
+  padding: 20px 16px 28px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.footer a { color: var(--peach-dark); }
+
+/* ===== Всплывающая подсказка ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  max-width: calc(100% - 32px);
+  padding: 12px 20px;
+  border-radius: 14px;
+  background: var(--text);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ===== Ошибка запуска ===== */
+.start-error {
+  max-width: 640px;
+  margin: 0 auto 24px;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  background: var(--danger-soft);
+  color: var(--danger);
+  line-height: 1.5;
+}
+.start-error[hidden] { display: none; }
+.start-error p { margin: 0; }
+.start-error__title { margin-bottom: 6px !important; font-weight: 800; }
+
+/* ===== Телефон ===== */
+@media (max-width: 640px) {
+  .header { padding-top: 16px; }
+  .header__title { font-size: 1.35rem; }
+
+  .toolbar { width: 100%; }
+  .toolbar__btn { flex: 1 1 auto; justify-content: center; padding: 10px 12px; }
+
+  .grid { grid-template-columns: 1fr; gap: 16px; }
+
+  .weather__temp { font-size: 2.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
